@@ -13,10 +13,15 @@ public class ClienteC {
 
   public static void main(String[] args) {
     try {
-      Registry registry = LocateRegistry.getRegistry(brokerIP);
-
-      BrokerInterface brokerInterface =
-          (BrokerInterface) registry.lookup("BrokerInterface");
+      System.setProperty("java.rmi.server.hostname", "192.168.1.12");
+      Registry registry;
+      try {
+    	   registry = LocateRegistry.createRegistry(6090);
+      } catch (Exception e) {
+    	   registry = LocateRegistry.getRegistry(6090);
+      }
+      
+      BrokerInterface brokerInterface = (BrokerInterface) registry.lookup("BrokerInterface");
       boolean running = true;
       while (running) {
         System.out.println("Elige escenario:");
@@ -67,7 +72,12 @@ public class ClienteC {
                 System.out.println("\t" + ++n + ") " + s);
               }
               System.out.print(">");
-              
+              String lol = br.readLine();
+              switch(lol) {
+              default: 
+            	  running_2=false;
+            	  break;
+              }
             }
           } else {
             running = false;

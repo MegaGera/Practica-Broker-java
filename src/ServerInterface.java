@@ -1,4 +1,5 @@
 import java.rmi.Remote;
+import java.rmi.RemoteException;
 
 /**
  * @author Jorge Rambla 718911
@@ -11,5 +12,5 @@ import java.rmi.Remote;
 
 public interface ServerInterface extends Remote{
 	String ejecutar_servicio(String nombre_servicio, String tipo_retorno, 
-							 String [] tipo_parametros, String [] parametros);
+							 String[] tipo_parametros, String[] parametros) throws RemoteException;
 }

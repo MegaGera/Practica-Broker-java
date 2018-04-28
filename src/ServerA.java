@@ -17,10 +17,12 @@ import java.util.Date;
 public class ServerA extends ServerAbstract {
 	private static String IP;
 	private static int puerto;
+	private static String ip_registro; //IP del host del registro RMI
 
-	public ServerA() {
+	public ServerA(String ip_registro) {
 		IP = new DatosConexion().getIP();
 		puerto = new DatosConexion().getPuerto();
+		this.ip_registro = ip_registro;
 	}
 
 	public String dar_hora() {
@@ -37,8 +39,8 @@ public class ServerA extends ServerAbstract {
 
 	public static void main(String args[]) {
 		try {
-			ServerA server = new ServerA();
-			System.setProperty("java.rmi.server.hostname", IP);
+			ServerA server = new ServerA(args[0]);
+			System.setProperty("java.rmi.server.hostname", ip_registro);
 			ServerInterface stub = (ServerInterface) UnicastRemoteObject.exportObject(server, 0);
 			Registry registry = null;
 			try {
@@ -50,17 +52,17 @@ public class ServerA extends ServerAbstract {
 			System.out.println("ServerA registrado!!");
 			
 			// Se coge el objeto remoto del broker
-            registry = LocateRegistry.getRegistry(IP);
+            //registry = LocateRegistry.getRegistry(IP);
             BrokerInterface brokerInterface = (BrokerInterface) registry.lookup("BrokerInterface");
             // Se registra el servidor dentro del broker
-            brokerInterface.registrar_servidor(IP,"ServerA");
+            brokerInterface.registrar_servidor(ip_registro,"ServerA");
             System.out.println("ServerA registrado en Broker!!");
             // Se registran los servicios dentro del broker
             brokerInterface.registrar_servicio("ServerA", "dar_hora", new String[0], "String");
             brokerInterface.registrar_servicio("ServerA", "dar_fecha", new String[0], "String");
             System.out.println("Servicios de ServerA registrados en Broker!!");
 		} catch (Exception e) {
-
+			System.out.println(e);
 		}
 	}
 
