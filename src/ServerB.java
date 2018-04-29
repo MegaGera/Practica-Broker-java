@@ -46,7 +46,7 @@ public class ServerB extends ServerAbstract {
 			try {
 				registry = LocateRegistry.createRegistry(puerto);
 			} catch (Exception e) {
-				registry = LocateRegistry.getRegistry(puerto);
+				registry = LocateRegistry.getRegistry(ip_registro, puerto);
 			}
 			registry.bind("ServerB", stub);
 			System.out.println("ServerB registrado!!");
@@ -61,7 +61,7 @@ public class ServerB extends ServerAbstract {
             brokerInterface.registrar_servicio("ServerB", "lista_libros", new String[0], "String[]");
             String[] parametros = {"String libro"};
             brokerInterface.registrar_servicio("ServerB", "introducir_libro", parametros, "void");
-            System.out.println("Servicios de ServerB registrados en Broker");   
+            System.out.println("Servicios de ServerB registrados en Broker!!");   
 		} catch (Exception e) {
 			System.err.println(e);
 		}

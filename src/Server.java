@@ -24,9 +24,9 @@ public class Server {
     return retVal[0];
   }
   
-  public String getPort() {
+  public int getPort() {
     String[] retVal = this.host_remoto_IP_port.split(":");
-    return retVal[1];
+    return Integer.parseInt(retVal[1]);
   }
   
   public String getNombre() {

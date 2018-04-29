@@ -38,18 +38,18 @@ public class ClienteC {
             boolean running_1 = true;
             while (running_1) {
               System.out.println("Elige una opcion");
-              System.out.println("\tA) Insertar libro.");
-              System.out.println("\tB) Lista de libros, fecha y hora actuales.");
-              System.out.println("\tC) Salir.");
+              System.out.println("\t1) Insertar libro.");
+              System.out.println("\t2) Lista de libros, fecha y hora actuales.");
+              System.out.println("\t3) Salir.");
               System.out.print("> ");
 
               switch (br.readLine().toUpperCase()) {
-                case "A":
+                case "1":
                   System.out.print("Nombre del libro: ");
                   String[] param = {br.readLine()};
                   brokerInterface.ejecutar_servicio("introducir_libro", param);
                   break;
-                case "B":
+                case "2":
                   System.out.println(
                       brokerInterface.ejecutar_servicio("lista_libros", new String[0]));
                   System.out.println("Fecha actual: "
@@ -83,7 +83,7 @@ public class ClienteC {
             running = false;
           }
         } catch (Exception e) {
-          System.err.println("No se pueden poner caracteres no numericos");
+          System.err.println("No se pueden poner caracteres no numericos" + e);
         }
       }
     } catch (RemoteException e) {

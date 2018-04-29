@@ -46,7 +46,7 @@ public class ServerA extends ServerAbstract {
 			try {
 				registry = LocateRegistry.createRegistry(puerto);
 			} catch (Exception e) {
-				registry = LocateRegistry.getRegistry(puerto);
+				registry = LocateRegistry.getRegistry(ip_registro, puerto);
 			}
 			registry.bind("ServerA", stub);
 			System.out.println("ServerA registrado!!");

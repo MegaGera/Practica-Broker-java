@@ -33,10 +33,9 @@ public class Broker implements BrokerInterface {
       for (Service service : server.getServicios()) {
         if (service.getNom_servicio().equals(nom_servicio)) {
           try {
-            Registry reg = LocateRegistry.getRegistry(server.getIP());
+            Registry reg = LocateRegistry.getRegistry(ip, server.getPort());
             ServerInterface serverInterface =
                 (ServerInterface) reg.lookup(server.getNombre());
-
             return serverInterface.ejecutar_servicio(service.getNom_servicio(),
                 service.getRetorno(), service.getLista_parametros(), parametros_servicio);
           } catch (NotBoundException e) {
@@ -51,7 +50,7 @@ public class Broker implements BrokerInterface {
   @Override
   public void registrar_servidor(String host_remoto_IP_port, String nombre_registrado)
       throws RemoteException {
-    this.servidores.add(new Server(host_remoto_IP_port, nombre_registrado));
+    this.servidores.add(new Server(host_remoto_IP_port+":"+PUERTO, nombre_registrado));
 
   }
 
@@ -68,7 +67,7 @@ public class Broker implements BrokerInterface {
 
   @Override
   public ArrayList<String> listar_servicios() throws RemoteException {
-    ArrayList<String> retVal = new ArrayList<String>();
+   ArrayList<String> retVal = new ArrayList<String>();
     for (Server server : this.servidores) {
       for (Service service : server.getServicios()) {
         retVal.add(service.toString());
@@ -104,5 +103,4 @@ public class Broker implements BrokerInterface {
       }
     }
   }
-
 }
